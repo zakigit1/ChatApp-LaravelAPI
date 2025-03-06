@@ -209,7 +209,7 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 
 ---
 
-Thank you for using **Chat-App-Laravel-API**! We look forward to your contributions and feedback.
+Thank you for using **Chat Application API**! We look forward to your contributions and feedback 💙.
 
 <!--
 ---
