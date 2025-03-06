@@ -63,10 +63,12 @@ A robust and scalable **RESTful API** for building real-time chat applications p
 
 3. **Configure Environment**:
    - Copy `.env.example` to `.env`:
+     
      ```bash
      cp .env.example .env
      ```
    - Update `.env` with your database and Pusher credentials:
+     
      ```env
      DB_CONNECTION=mysql
      DB_HOST=127.0.0.1
