@@ -109,9 +109,9 @@ A robust and scalable **RESTful API** for building real-time chat applications p
 
 ### Getting Started
 1. **Register a User**:
-   
    - Use the `/api/register-user` endpoint to create a new user.
-
+     
+<!-- -->
 
    ```bash
    curl -X POST http://localhost:8000/api/register-user \
@@ -121,8 +121,9 @@ A robust and scalable **RESTful API** for building real-time chat applications p
 
 3. **Login**:
    - Use the `/api/login-user` endpoint to authenticate.
-
      
+<!-- -->
+
    ```bash
    curl -X POST http://localhost:8000/api/login-user \
         -H "Content-Type: application/json" \
@@ -132,6 +133,8 @@ A robust and scalable **RESTful API** for building real-time chat applications p
 4. **Send a Message**:
    - Use the `/api/chat_message` endpoint to send a message.
      
+<!-- -->
+
    ```bash
    curl -X POST http://localhost:8000/api/chat_message \
         -H "Authorization: Bearer [token]" \
