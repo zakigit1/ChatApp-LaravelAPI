@@ -1,4 +1,3 @@
-```markdown
 # Chat-App-Laravel-API
 
 A robust and scalable **RESTful API** for building real-time chat applications powered by **Laravel**. This project provides the backend infrastructure for messaging systems, enabling seamless communication between users with features like real-time messaging and notifications, user authentication, and message history.
@@ -27,14 +26,16 @@ A robust and scalable **RESTful API** for building real-time chat applications p
 
 <!--
 ---
+
 ## Visual Demonstration
 
- Add screenshots or GIFs here to showcase your project -->
+ Add screenshots or GIFs here to showcase your project 
 ![Chat Interface](screenshots/chat-interface.png)  
 *Example of the chat interface.*
 
 ![API Documentation](screenshots/api-docs.png)  
-*API documentation generated using Swagger.*-->
+*API documentation generated using Swagger.*
+-->
 
 ---
 
