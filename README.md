@@ -109,16 +109,19 @@ A robust and scalable **RESTful API** for building real-time chat applications p
 
 ### Getting Started
 1. **Register a User**:
+   
    - Use the `/api/register-user` endpoint to create a new user.
-     
+
+
    ```bash
    curl -X POST http://localhost:8000/api/register-user \
         -H "Content-Type: application/json" \
         -d '{"email": "john@example.com", "password": "password", "password_confirmation": "password"}'
    ```
 
-2. **Login**:
+3. **Login**:
    - Use the `/api/login-user` endpoint to authenticate.
+
      
    ```bash
    curl -X POST http://localhost:8000/api/login-user \
@@ -126,7 +129,7 @@ A robust and scalable **RESTful API** for building real-time chat applications p
         -d '{"email": "john@example.com", "password": "password"}'
    ```
 
-3. **Send a Message**:
+4. **Send a Message**:
    - Use the `/api/chat_message` endpoint to send a message.
      
    ```bash
@@ -204,8 +207,8 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 ---
 
 Thank you for using **Chat-App-Laravel-API**! We look forward to your contributions and feedback.
-```
 
+<!--
 ---
 
 ### Notes:
@@ -215,3 +218,4 @@ Thank you for using **Chat-App-Laravel-API**! We look forward to your contributi
 4. Customize the **Contact and Support** section with your preferred communication channels.
 
 This README is designed to be professional, comprehensive, and accessible to developers of all skill levels. Let me know if you need further adjustments!
+-->
