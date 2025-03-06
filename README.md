@@ -109,33 +109,36 @@ A robust and scalable **RESTful API** for building real-time chat applications p
 
 ### Getting Started
 1. **Register a User**:
-   - Use the `/api/register` endpoint to create a new user.
+   - Use the `/api/register-user` endpoint to create a new user.
+     
    ```bash
-   curl -X POST http://localhost:8000/api/register \
+   curl -X POST http://localhost:8000/api/register-user \
         -H "Content-Type: application/json" \
-        -d '{"name": "John Doe", "email": "john@example.com", "password": "password"}'
+        -d '{"email": "john@example.com", "password": "password", "password_confirmation": "password"}'
    ```
 
 2. **Login**:
-   - Use the `/api/login` endpoint to authenticate.
+   - Use the `/api/login-user` endpoint to authenticate.
+     
    ```bash
-   curl -X POST http://localhost:8000/api/login \
+   curl -X POST http://localhost:8000/api/login-user \
         -H "Content-Type: application/json" \
         -d '{"email": "john@example.com", "password": "password"}'
    ```
 
 3. **Send a Message**:
-   - Use the `/api/messages` endpoint to send a message.
+   - Use the `/api/chat_message` endpoint to send a message.
+     
    ```bash
-   curl -X POST http://localhost:8000/api/messages \
+   curl -X POST http://localhost:8000/api/chat_message \
         -H "Authorization: Bearer [token]" \
         -H "Content-Type: application/json" \
-        -d '{"receiver_id": 2, "message": "Hello!"}'
+        -d '{"chat_id": 2, "message": "Hello!"}'
    ```
 
 ### Example Workflow
 1. Register and log in as a user.
-2. Use the `/api/messages` endpoint to send and retrieve messages.
+2. Use the `/api/chat_message` endpoint to send and retrieve messages.
 3. Integrate the API with a frontend application for a complete chat experience.
 
 ---
@@ -143,13 +146,13 @@ A robust and scalable **RESTful API** for building real-time chat applications p
 ## Some API Endpoints Information
 
 ### Essential Endpoints
-- **POST `/api/register`**: Register a new user.
-- **POST `/api/login`**: Authenticate a user.
-- **GET `/api/messages`**: Retrieve messages.
-- **POST `/api/messages`**: Send a message.
+- **POST `/api/register-user`**: Register a new user.
+- **POST `/api/login-user`**: Authenticate a user.
+- **GET `/api/chat_message`**: Retrieve messages.
+- **POST `/api/chat_message`**: Send a message.
 
 ### Authentication
-- All endpoints (except `/api/register` and `/api/login`) require a **Bearer Token** for authentication.
+- All endpoints (except `/api/register-user` and `/api/login-user`) require a **Bearer Token** for authentication.
 
 
 ---
@@ -195,7 +198,7 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 ## Contact and Support
 
 - **Maintainer**: [Mohammed Ilyes Zakarian Bousbaa](https://github.com/zakigit1)
-- **Email**: [mohammedilyeszakaria.bousbaa@gmail.com](mailto:your.email@example.com)
+- **Email**: [mohammedilyeszakaria.bousbaa@gmail.com](mailto:mohammedilyeszakaria.bousbaa@gmail.com)
 - **Support Options**: Open an issue on GitHub or contact the maintainer directly.
 
 ---
