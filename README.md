@@ -1,10 +1,10 @@
 # Chat Application API with Laravel 📱
-<div>
+
   [![Laravel Version](https://img.shields.io/badge/Laravel-10.x-red.svg)](https://laravel.com)
   [![PHP Version](https://img.shields.io/badge/PHP-8.1+-blue.svg)](https://php.net)
   [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
   [![Contributors](https://img.shields.io/github/contributors/zakigit1/Chat-App-Laravel-API)](https://github.com/zakigit1/ZAKA-eCommerce/graphs/contributors)
-</div>
+
 A robust and scalable **RESTful API** for building real-time chat applications powered by **Laravel**. This project provides the backend infrastructure for messaging systems, enabling seamless communication between users with features like real-time messaging and notifications, user authentication, and message history.
 
 ---
