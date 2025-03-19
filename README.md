@@ -21,12 +21,13 @@ A robust and scalable **RESTful API** for building real-time chat applications p
 
 ### Unique Selling Points
 - **Modular Design**: Easily extendable for custom features like group chats, file sharing, or chatbots.
-- **Real-Time Notifications**: Notify users of new messages or events in real time.
+- **Real-Time Notifications**: Notify users of new messages or events in real time using OneSignal.
 - **Cross-Platform Compatibility**: Works seamlessly with web, mobile, and desktop clients.
 
 ### Technical Highlights
 - Built with **Laravel 10.x** for robust backend development.
 - Uses **Pusher** for real-time communication.
+- Implements **OneSignal** for push notifications.
 - Implements **RESTful API** standards for easy integration.
 - Supports **MySQL** for reliable data storage.
 
@@ -53,6 +54,7 @@ A robust and scalable **RESTful API** for building real-time chat applications p
 - MySQL 5.7 or higher
 - Node.js and NPM (for front-end assets, if applicable)
 - Pusher account (for real-time messaging)
+- OneSignal account (for push notifications)
 
 ### Step-by-Step Setup
 1. **Clone the Repository**:
@@ -73,7 +75,7 @@ A robust and scalable **RESTful API** for building real-time chat applications p
      ```bash
      cp .env.example .env
      ```
-   - Update `.env` with your database and Pusher credentials:
+   - Update `.env` with your database, Pusher, and OneSignal credentials:
      
      ```env
      DB_CONNECTION=mysql
@@ -83,6 +85,8 @@ A robust and scalable **RESTful API** for building real-time chat applications p
      DB_USERNAME=root
      DB_PASSWORD=
 
+     BROADCAST_DRIVER=pusher
+     
      PUSHER_APP_ID=your-pusher-app-id
      PUSHER_APP_KEY=your-pusher-app-key
      PUSHER_APP_SECRET=your-pusher-app-secret
@@ -103,12 +107,7 @@ A robust and scalable **RESTful API** for building real-time chat applications p
    ```bash
    php artisan serve
    ```
-<!--
-7. **Run WebSocket Server** (for real-time messaging):
-   ```bash
-   php artisan websockets:serve
-   ```
--->
+
 ---
 
 ## Usage Guide
@@ -117,30 +116,34 @@ A robust and scalable **RESTful API** for building real-time chat applications p
 1. **Register a User**:
    - Use the `/api/register-user` endpoint to create a new user.
      
-<!-- -->
-
    ```bash
    curl -X POST http://localhost:8000/api/register-user \
         -H "Content-Type: application/json" \
         -d '{"email": "john@example.com", "password": "password", "password_confirmation": "password"}'
    ```
 
-3. **Login**:
+2. **Login**:
    - Use the `/api/login-user` endpoint to authenticate.
      
-<!-- -->
-
    ```bash
    curl -X POST http://localhost:8000/api/login-user \
         -H "Content-Type: application/json" \
         -d '{"email": "john@example.com", "password": "password"}'
    ```
 
+3. **Create a Chat**:
+   - Use the `/api/chat` endpoint to create a new chat with another user.
+     
+   ```bash
+   curl -X POST http://localhost:8000/api/chat \
+        -H "Authorization: Bearer [token]" \
+        -H "Content-Type: application/json" \
+        -d '{"user_id": 2, "is_private": true}'
+   ```
+
 4. **Send a Message**:
    - Use the `/api/chat_message` endpoint to send a message.
      
-<!-- -->
-
    ```bash
    curl -X POST http://localhost:8000/api/chat_message \
         -H "Authorization: Bearer [token]" \
@@ -150,21 +153,82 @@ A robust and scalable **RESTful API** for building real-time chat applications p
 
 ### Example Workflow
 1. Register and log in as a user.
-2. Use the `/api/chat_message` endpoint to send and retrieve messages.
-3. Integrate the API with a frontend application for a complete chat experience.
+2. Create a chat with another user.
+3. Send and receive messages in real-time.
+4. Integrate the API with a frontend application for a complete chat experience.
 
 ---
 
-## Some API Endpoints Information
+## API Documentation
+
+This project includes comprehensive API documentation that details all available endpoints, request/response formats, and authentication methods.
+
+### Documentation Access
+- **Full Documentation**: See [API_DOCUMENTATION.md](API_DOCUMENTATION.md) for complete API reference.
+
+### Key API Features
+- **Authentication**: Secure token-based authentication using Laravel Sanctum.
+- **Real-time Communication**: WebSocket integration via Pusher for instant messaging.
+- **Push Notifications**: OneSignal integration for mobile and web notifications.
+- **RESTful Design**: Consistent and intuitive API structure.
+
+### Base URL & Versioning
+- **Base URL:** `http://localhost/api` (Changes based on deployment environment)
+- **Versioning:** All endpoints are prefixed with `/api`
 
 ### Essential Endpoints
-- **POST `/api/register-user`**: Register a new user.
-- **POST `/api/login-user`**: Authenticate a user.
-- **GET `/api/chat_message`**: Retrieve messages.
-- **POST `/api/chat_message`**: Send a message.
+
+#### User Management
+- **POST `/api/register-user`**: Register a new user and receive authentication token.
+  ```json
+  // Request
+  {
+    "email": "user@example.com",
+    "password": "password",
+    "password_confirmation": "password"
+  }
+  
+  // Response
+  {
+    "data": {
+      "userData": {
+        "username": "user",
+        "email": "user@example.com"
+      },
+      "token": "1|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    },
+    "status": "sucess",
+    "message": "User has been register successfully."
+  }
+  ```
+
+- **POST `/api/login-user`**: Authenticate a user and receive token.
+- **POST `/api/login-user-WithToken`**: Authenticate using an existing token.
+- **POST `/api/logout-user`**: Invalidate user's authentication token.
+
+#### Chat Management
+- **GET `/api/chat`**: List all chats for the authenticated user.
+- **POST `/api/chat`**: Create a new chat.
+- **GET `/api/chat/{chat_id}`**: Get details of a specific chat.
+
+#### Messaging
+- **GET `/api/chat_message`**: Retrieve messages from a specific chat.
+- **POST `/api/chat_message`**: Send a message to a specific chat.
 
 ### Authentication
 - All endpoints (except `/api/register-user` and `/api/login-user`) require a **Bearer Token** for authentication.
+- Include the token in the `Authorization` header of your API requests:
+  ```
+  Authorization: Bearer 1|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  ```
+
+### Status Codes
+- `200 OK`: Request successful
+- `401 Unauthorized`: Authentication required or failed
+- `422 Unprocessable Entity`: Validation errors
+
+### For More Information
+Refer to the [API_DOCUMENTATION.md](API_DOCUMENTATION.md) file for detailed endpoint descriptions, request/response formats, and usage examples.
 
 
 ---
@@ -189,15 +253,21 @@ A robust and scalable **RESTful API** for building real-time chat applications p
 ### Common Issues
 1. **Real-Time Messaging Not Working**:
    - Ensure Pusher credentials are correctly configured in `.env`.
-   - Verify the WebSocket server is running.
+   - Verify the `BROADCAST_DRIVER` is set to `pusher`.
+   - Check browser console for WebSocket connection errors.
 
 2. **Database Connection Errors**:
    - Double-check your `.env` database credentials.
    - Ensure MySQL is running.
 
+3. **Push Notifications Not Received**:
+   - Verify OneSignal configuration.
+   - Check if the user has granted notification permissions.
+
 ### Debug Tips
 - Use `php artisan tinker` to interact with your application.
 - Check Laravel logs in `storage/logs/laravel.log`.
+- Enable debug mode in `.env` by setting `APP_DEBUG=true`.
 
 ---
 
@@ -216,15 +286,3 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 ---
 
 Thank you for using **Chat Application API**! We look forward to your contributions and feedback 💙.
-
-<!--
----
-
-### Notes:
-1. Replace placeholders (e.g., `[Your Project Name]`, `[token]`) with actual values.
-2. Add screenshots or GIFs to the **Visual Demonstration** section to make the README more engaging.
-3. Update the **API Documentation** section with detailed endpoint descriptions and examples.
-4. Customize the **Contact and Support** section with your preferred communication channels.
-
-This README is designed to be professional, comprehensive, and accessible to developers of all skill levels. Let me know if you need further adjustments!
--->

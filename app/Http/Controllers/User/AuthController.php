@@ -16,13 +16,11 @@ class AuthController extends Controller
 {
     public UserServices $userservices;
 
-    public function __construct(UserServices $userservice){ 
-
+    public function __construct(UserServices $userservice){
        $this->userservices = $userservice;
-
     }
 
-    
+
     /**
      * Registers a user
      *
@@ -34,9 +32,8 @@ class AuthController extends Controller
     public function register(RegisterRequest $request): JsonResponse
     {
         $data = $request->validated();//just validate columns (radi yjib ghi columns ldrnalhom validation fl rules)
-        
-        // return response()->json($data);
 
+        
         $user = $this->userservices->createUser($data);
 
         $token = $user->createToken(User::USER_TOKEN);
@@ -58,10 +55,14 @@ class AuthController extends Controller
 
         $isValid = $this->isValidCredential($request);// radi tjih array json man function isValidCredential
 
-        if (!$isValid['success']) { //sucess value is false 
+        if (!$isValid['success']) { //sucess value is false
 
-            return $this->sendResponse($isValid['message'],'failed', Response::HTTP_UNPROCESSABLE_ENTITY);
-        
+            return $this->sendResponse(
+                $isValid['message'],
+                'failed', 
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+
         }
 
 
@@ -72,7 +73,7 @@ class AuthController extends Controller
         return $this->sendResponse([
             'userData' => $user,
             'token' => $token->plainTextToken
-        ], '','Login successfully!');
+        ], 'success','Login successfully!');
 
 
     }
@@ -87,11 +88,11 @@ class AuthController extends Controller
     private function isValidCredential(LoginRequest $request) : array
     {
         $data = $request->validated();
-        
-        // Find User : 
+
+        // Find User :
         $user = User::where('email', $data['email'])->first();
-        
-        // Email Is Invalide : 
+
+        // Email Is Invalide :
         if ($user === null) {
 
             return [
@@ -101,7 +102,7 @@ class AuthController extends Controller
 
         }
 
-        // Password Is Valide : 
+        // Password Is Valide :
         if (Hash::check($data['password'], $user->password)) {
 
             return [
@@ -111,10 +112,10 @@ class AuthController extends Controller
 
         }
 
-        // Password Is Invalide : 
+        // Password Is Invalide :
         return [
             'success' => false,
-            'message' => 'Password is not matched',
+            'message' => 'Password is not matched',// hadi nrmlemt mndirhch ngolh bli crendtial is not match
         ];
 
     }
@@ -139,7 +140,7 @@ class AuthController extends Controller
      */
 
 
-    ######## this doing deleted just the current token of user : 
+    ######## this doing deleted just the current token of user :
     // public function logout(Request $request) : JsonResponse
     // {
     //     $request->user()->currentAccessToken()->delete();//delete the current user authanticated token
@@ -147,26 +148,19 @@ class AuthController extends Controller
     //     // return $this->success(null,'Logout successfully!');
     // }
 
-    ######## this doing deleted all user token  : 
+    ######## this doing deleted all user token  :
     public function logout(Request $request): JsonResponse
     {
         $request->user()->tokens->each(function ($token, $key) {
             $token->delete();
         });
-    
-        return $this->sendResponse(null,'*', 'Logout successfully!');
+
+        return $this->sendResponse(
+            null,
+            '*', 
+            'Logout successfully!'
+        );
     }
-    
-
-
-
-
-
-
-
-
-
-
 
 
 }

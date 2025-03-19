@@ -13,7 +13,7 @@ Broadcast::routes(['middleware' =>['auth:sanctum']]);
 
 
 Route::post('/api-online',function(){
-    dd('We Are Online now !');
+    // dd('We Are Online now !');
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -23,12 +23,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register-user',[AuthController::class,'register']);
 Route::post('/login-user',[AuthController::class,'login']);
+
+
 Route::group(['middleware'=>'auth:sanctum'],function(){
+
     Route::post('/login-user-WithToken',[AuthController::class,'loginWithToken']);
     Route::post('/logout-user',[AuthController::class,'logout']);
+    
 });
-// Route::post('/login-user-WithToken',[AuthController::class,'loginWithToken'])->middleware('auth:sanctum');
-// Route::post('/logout-user',[AuthController::class,'logout'])->middleware('auth:sanctum');
+
 
 
 
